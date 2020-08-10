@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using ATG.Utilities;
+using UnityEngine;
 
 namespace ATG.Core
 {
     public class GameManager : MonoBehaviour
     {
+        public SceneChanger SceneChanger { get; set; }
+
         public static GameManager Instance { get; set; }
 
         private void Awake()
@@ -16,6 +19,8 @@ namespace ATG.Core
             {
                 Instance = this;
             }
+
+            SceneChanger = new SceneChanger();
         }
     }
 }
