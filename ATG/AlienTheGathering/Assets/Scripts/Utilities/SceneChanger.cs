@@ -1,9 +1,8 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 
 namespace ATG.Utilities
 {
-    public class SceneChanger : MonoBehaviour
+    public class SceneChanger
     {
         public void Change(string sceneName)
         {
