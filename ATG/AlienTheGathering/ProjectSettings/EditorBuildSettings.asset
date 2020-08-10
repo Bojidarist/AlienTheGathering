@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: d1c3109bdb54ad54c8a2b2838528e640
+  - enabled: 1
+    path: Assets/Scenes/CowLVL.unity
+    guid: 1f396e91f8b73444cabfca44be915d5b
+  - enabled: 1
+    path: Assets/Scenes/GrassLVL.unity
+    guid: b4f252b5c216cee47aaf9ec862b8f336
   m_configObjects: {}

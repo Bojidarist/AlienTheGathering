@@ -22,5 +22,10 @@ namespace ATG.Core
 
             SceneChanger = new SceneChanger();
         }
+
+        public void CloseGame()
+        {
+            Application.Quit(0);
+        }
     }
 }
