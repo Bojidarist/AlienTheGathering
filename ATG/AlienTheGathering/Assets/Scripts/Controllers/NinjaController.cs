@@ -9,13 +9,11 @@ namespace ATG.Controllers
         private int direction = 0;   // This value will be multiplied on movement
         private Vector3 movementVec = Vector3.zero;
 
-        // Start is called before the first frame update
         void Start()
         {
             player = GetComponent<AlienController>();
         }
 
-        // Update is called once per frame
         void Update()
         {
             if (player != null)
