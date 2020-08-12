@@ -13,14 +13,12 @@ namespace ATG.Controllers
         private float groundEndX = 0.0f;
         private RectTransform groundRect = default;
 
-        // Start is called before the first frame update
         void Start()
         {
             groundRect = ground.GetComponent<RectTransform>();
             direction = new int[2] { -1, 1 }[Random.Range(0,2)];    // Pick random direction
         }
 
-        // Update is called once per frame
         void Update()
         {
             if(ground != null)
