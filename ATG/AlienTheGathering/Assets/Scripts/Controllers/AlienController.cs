@@ -32,6 +32,11 @@ public class AlienController : MonoBehaviour
             jumpVector.y = jumpForce;
             rb.AddForce(jumpVector, ForceMode2D.Impulse);
         }
+
+        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2") || Input.GetButtonDown("Fire2"))
+        {
+            Debug.Log("Fire!");
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
