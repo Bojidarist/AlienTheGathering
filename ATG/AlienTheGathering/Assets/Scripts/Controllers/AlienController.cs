@@ -4,6 +4,7 @@ public class AlienController : MonoBehaviour
 {
     [SerializeField] private float speed = 0.0f;
     private float horizontalInput = 0.0f;
+    private float verticalInput = 0.0f;
     private Vector3 movementVector = Vector3.zero;
     private Vector2 jumpVector = Vector2.zero;
     [SerializeField] private float jumpForce = 0.0f;
@@ -19,13 +20,15 @@ public class AlienController : MonoBehaviour
     void Update()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
 
         movementVector.x = horizontalInput;
 
         transform.position += (movementVector * speed) * Time.deltaTime;
 
-        if (Input.GetButtonDown("Jump") && isOnGround)
+        if (verticalInput >= 0.5f && isOnGround)
         {
+            isOnGround = false;
             jumpVector.y = jumpForce;
             rb.AddForce(jumpVector, ForceMode2D.Impulse);
         }
