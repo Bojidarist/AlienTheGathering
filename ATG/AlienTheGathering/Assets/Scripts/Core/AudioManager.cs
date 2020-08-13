@@ -17,5 +17,16 @@ namespace ATG.Core
                 Instance = this;
             }
         }
+
+        public void LoadSound(ref AudioSource src, string resourcesPath, bool isLoop = false, bool playOnAwake = false, bool addComponent = true)
+        {
+            if (addComponent)
+            {
+                src = gameObject.AddComponent<AudioSource>();
+            }
+            src.clip = Resources.Load<AudioClip>(resourcesPath);
+            src.loop = isLoop;
+            src.playOnAwake = playOnAwake;
+        }
     }
 }
