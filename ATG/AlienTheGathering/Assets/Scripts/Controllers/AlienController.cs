@@ -33,7 +33,7 @@ public class AlienController : MonoBehaviour
             rb.AddForce(jumpVector, ForceMode2D.Impulse);
         }
 
-        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2") || Input.GetButtonDown("Fire2"))
+        if (Input.GetButtonDown("Fire1") || Input.GetButtonDown("Fire2") || Input.GetButtonDown("Fire3"))
         {
             Debug.Log("Fire!");
         }
