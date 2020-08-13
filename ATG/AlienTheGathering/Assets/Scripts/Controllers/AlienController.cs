@@ -26,11 +26,14 @@ namespace ATG.Controllers
         private bool isAttacking = false;
         private bool isTakingDamage = false;
         private DateTime lastTimeAttacked = default;
+        private Vector2 clampedPosition = Vector2.zero;
+        private ScreenBorderDetector borderDetector = default;
 
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            borderDetector = FindObjectOfType<ScreenBorderDetector>();
             AudioManager.Instance.LoadSound(ref attackSFX, Path.Combine("SFX", "Attack"));
         }
 
@@ -47,6 +50,13 @@ namespace ATG.Controllers
             movementVector.x = horizontalInput;
 
             transform.position += (movementVector * speed) * Time.deltaTime;
+
+            if (borderDetector != null)
+            {
+                clampedPosition = transform.position;
+                clampedPosition.x = Mathf.Clamp(clampedPosition.x, borderDetector.leftBorder, borderDetector.rightBorder);
+                transform.position = clampedPosition;
+            }
 
             if (verticalInput >= 0.5f && isOnGround)
             {

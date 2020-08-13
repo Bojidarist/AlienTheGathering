@@ -13,10 +13,13 @@ namespace ATG.Controllers
         private Vector3 movementVec = Vector3.zero;
         private SpriteRenderer spriteRenderer = default;
         private bool isAttacked = false;
+        private Vector2 clampedPosition = Vector2.zero;
+        private ScreenBorderDetector borderDetector = default;
 
         void Start()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();            
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            borderDetector = FindObjectOfType<ScreenBorderDetector>();           
         }
 
         void Update()
@@ -43,6 +46,13 @@ namespace ATG.Controllers
                 attackObj.transform.localScale = flipVec;
                 movementVec.x = (direction * speed) * Time.deltaTime;
                 transform.position += movementVec;
+
+                if (borderDetector != null)
+                {
+                    clampedPosition = transform.position;
+                    clampedPosition.x = Mathf.Clamp(clampedPosition.x, borderDetector.leftBorder, borderDetector.rightBorder);
+                    transform.position = clampedPosition;
+                }
             }
         }
 

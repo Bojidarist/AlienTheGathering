@@ -14,10 +14,13 @@ namespace ATG.Controllers
         private float horizontalInput = 0.0f;
         private DateTime lastAttackTime = default;
         private AudioSource attackSFX = default;
+        private Vector2 clampedPosition = Vector2.zero;
+        private ScreenBorderDetector borderDetector = default;
 
         void Start()
         {
             AudioManager.Instance.LoadSound(ref attackSFX, Path.Combine("SFX", "LaserShoot"));
+            borderDetector = FindObjectOfType<ScreenBorderDetector>();
         }
 
         // Update is called once per frame
@@ -34,6 +37,13 @@ namespace ATG.Controllers
             }
 
             gameObject.transform.Translate((horizontalInput * speed) * Time.deltaTime, 0.0f, 0.0f);
+
+            if (borderDetector != null)
+            {
+                clampedPosition = transform.position;
+                clampedPosition.x = Mathf.Clamp(clampedPosition.x, borderDetector.leftBorder, borderDetector.rightBorder);
+                transform.position = clampedPosition;
+            }
         }
 
         IEnumerator Attack()
