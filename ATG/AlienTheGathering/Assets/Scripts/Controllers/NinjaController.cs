@@ -8,9 +8,11 @@ namespace ATG.Controllers
         [SerializeField] private int health = 10;
         [SerializeField] private float speed = 1.0f;
         [SerializeField] private AlienController player = default;
+        [SerializeField] private GameObject attackObj = default;
         private int direction = 0;   // This value will be multiplied on movement
         private Vector3 movementVec = Vector3.zero;
         private SpriteRenderer spriteRenderer = default;
+        private bool isAttacked = false;
 
         void Start()
         {
@@ -21,6 +23,7 @@ namespace ATG.Controllers
         {
             if (player != null)
             {
+                Vector3 flipVec = attackObj.transform.localScale;
                 if(player.gameObject.transform.position.x < transform.position.x)
                 {
                     direction = -1;
@@ -36,6 +39,8 @@ namespace ATG.Controllers
                     direction = 0;
                 }
                 
+                flipVec.x = direction;
+                attackObj.transform.localScale = flipVec;
                 movementVec.x = (direction * speed) * Time.deltaTime;
                 transform.position += movementVec;
             }
@@ -43,7 +48,8 @@ namespace ATG.Controllers
 
         void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.gameObject.tag == "PlayerAttack")
+            Debug.Log(other.gameObject.tag);
+            if (other.gameObject.tag == "PlayerAttack" && !isAttacked)
             {
                 StartCoroutine(TakeDamage());
             }
@@ -56,9 +62,11 @@ namespace ATG.Controllers
                 Destroy(this.gameObject);
             }
             
+            isAttacked = true;
             spriteRenderer.color = Color.red;
             yield return new WaitForSeconds(0.1f);
             spriteRenderer.color = Color.white;
+            isAttacked = false;
         }
     }
 }

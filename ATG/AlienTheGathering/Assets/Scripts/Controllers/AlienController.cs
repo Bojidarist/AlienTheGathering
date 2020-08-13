@@ -2,6 +2,7 @@
 using System.IO;
 using System.Collections;
 using ATG.Core;
+using System;
 using ATG.Utilities;
 
 namespace ATG.Controllers
@@ -21,16 +22,25 @@ namespace ATG.Controllers
         private bool isOnGround = false;
         private int attackDirection = 1;
         private AudioSource attackSFX = default;
+        private SpriteRenderer spriteRenderer = default;
+        private bool isAttacking = false;
+        private bool isTakingDamage = false;
+        private DateTime lastTimeAttacked = default;
 
         private void Start()
         {
             rb = GetComponent<Rigidbody2D>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
             AudioManager.Instance.LoadSound(ref attackSFX, Path.Combine("SFX", "Attack"));
         }
 
         // Update is called once per frame
         void Update()
         {
+            if (isTakingDamage && (DateTime.Now - lastTimeAttacked).TotalMilliseconds >= 1000)
+            {
+                StartCoroutine(TakeDamage());
+            }
             horizontalInput = Input.GetAxisRaw("Horizontal");
             verticalInput = Input.GetAxisRaw("Vertical");
 
@@ -73,9 +83,40 @@ namespace ATG.Controllers
             flipVec.x = -attackDirection;
             attackSprite.transform.localScale = flipVec;
 
+            isAttacking = true;
             attackSprite.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             attackSprite.gameObject.SetActive(false);
+            isAttacking = false;
+        }
+
+        private IEnumerator TakeDamage()
+        {
+            if(--health <= 0)
+            {
+                Destroy(this.gameObject);
+            }
+            
+            lastTimeAttacked = DateTime.Now;
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(0.1f);
+            spriteRenderer.color = Color.white;
+        }
+
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if(other.gameObject.tag == "EnemyAttack" && !isAttacking)
+            {
+                isTakingDamage = true;
+            } 
+        }
+
+        void OnTriggerExit2D(Collider2D other)
+        {
+            if(other.gameObject.tag == "EnemyAttack")
+            {
+                isTakingDamage = false;
+            } 
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
