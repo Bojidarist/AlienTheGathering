@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
+using ATG.Utilities;
 
 namespace ATG.Controllers
 {
     public class CowController : MonoBehaviour
     {
         [SerializeField] private float speed = 3.0f;
-        [SerializeField] private float turnbackMargin = 1.0f;
         private int direction = 0;
         private Vector3 movementVec = Vector3.zero;
         private ScreenBorderDetector borderDetector = default;

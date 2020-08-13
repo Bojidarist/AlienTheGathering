@@ -5,7 +5,7 @@ namespace ATG.Core
 {
     public class GameManager : MonoBehaviour
     {
-        public SceneChanger SceneChanger { get; set; }
+        public SceneChanger sceneChanger { get; set; }
 
         public static GameManager Instance { get; set; }
 
@@ -20,7 +20,21 @@ namespace ATG.Core
                 Instance = this;
             }
 
-            SceneChanger = new SceneChanger();
+            sceneChanger = new SceneChanger();
+        }
+
+        public void StartGame()
+        {
+            UIManager.Instance.RemoveMainMenuUI();
+            UIManager.Instance.RemoveRestartUI();
+            UIManager.Instance.RemoveTitleScreenUI();
+            sceneChanger.Change(SceneNames.CowLevel);
+            ATGConfig.EnemyCount = 2;
+        }
+
+        public void LoseGame()
+        {
+            UIManager.Instance.ShowRestartUI();
         }
 
         public void CloseGame()

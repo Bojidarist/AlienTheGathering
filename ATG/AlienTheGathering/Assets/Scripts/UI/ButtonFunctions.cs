@@ -8,7 +8,7 @@ namespace ATG.UI
     {
         public void StartGame()
         {
-            GameManager.Instance.SceneChanger.Change(SceneNames.CowLevel);
+            GameManager.Instance.StartGame();
         }
 
         public void OpenMainMenuOptions()

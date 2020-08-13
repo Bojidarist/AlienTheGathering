@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using ATG.Utilities;
 
 namespace ATG.Controllers
 {
@@ -7,7 +8,7 @@ namespace ATG.Controllers
     {
         [SerializeField] private int health = 10;
         [SerializeField] private float speed = 1.0f;
-        [SerializeField] private AlienController player = default;
+        [SerializeField] public AlienController player = default;
         [SerializeField] private GameObject attackObj = default;
         private int direction = 0;   // This value will be multiplied on movement
         private Vector3 movementVec = Vector3.zero;

@@ -105,6 +105,7 @@ namespace ATG.Controllers
             if(--health <= 0)
             {
                 Destroy(this.gameObject);
+                GameManager.Instance.LoseGame();
             }
             
             lastTimeAttacked = DateTime.Now;
